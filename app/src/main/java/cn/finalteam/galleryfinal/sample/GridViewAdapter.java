@@ -54,21 +54,53 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = null;
         if (convertView == null) {
+            viewHolder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.grid_item, parent, false);
+            viewHolder.iv_item = (ImageView) convertView.findViewById(R.id.pic_iv);
+            viewHolder.iv_delete = (ImageView) convertView.findViewById(R.id.delete_but);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        ImageView iv_item = (ImageView) convertView.findViewById(R.id.pic_iv);
         if (position < imgList.size()) {
             //表示+号之前需要显示正常的图片
             String picUrl = imgList.get(position);
-            Glide.with(context).load(picUrl).into(iv_item);
+            Glide.with(context).load(picUrl).into(viewHolder.iv_item);
+            viewHolder.iv_delete.setVisibility(View.VISIBLE);
         } else {
             //显示最后一个+号
-            iv_item.setImageResource(R.mipmap.zj);
+            viewHolder.iv_item.setImageResource(R.mipmap.zj);
+            viewHolder.iv_delete.setVisibility(View.INVISIBLE);
         }
-        Log.d("Postion","------"+imgList.size()+"------");
-        Log.d("Postion","------"+position+"------");
+
+        viewHolder.iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletePic(position);
+            }
+        });
+
         return convertView;
     }
+
+    private class ViewHolder {
+        ImageView iv_item;
+        ImageView iv_delete;
+    }
+
+
+    /**
+     * 定义删除图片的方法
+     */
+    private void deletePic(int postion) {
+        //从数据源移除要删除的图片
+        imgList.remove(postion);
+        notifyDataSetChanged();
+
+    }
+
+
 }

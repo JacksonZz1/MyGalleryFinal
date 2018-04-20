@@ -49,24 +49,6 @@ public class PlusImageActivity extends AppCompatActivity implements View.OnClick
     }
 
     /**
-     * 定义删除图片的方法
-     */
-//    private void deletePic() {
-//        CancelOrOkDialog dialog = new CancelOrOkDialog(PlusImageActivity.this, "要删除这张图片吗？") {
-//            @Override
-//            public void ok() {
-//                super.ok();
-//                //从数据源移除要删除的图片
-//                mImaList.remove(mPosition);
-//                setPosition();
-//                dismiss();
-//            }
-//        };
-//        dialog.show();
-//
-//    }
-
-    /**
      * 设置当前显示的位置
      */
     private void setPosition() {
@@ -84,7 +66,6 @@ public class PlusImageActivity extends AppCompatActivity implements View.OnClick
         setResult(Constants.RESULT_CODE_VIEW_IMG, intent);
         finish();
     }
-
 
     @Override
     public void onClick(View v) {
